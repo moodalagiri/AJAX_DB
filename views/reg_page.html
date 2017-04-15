@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type = "text/javascript" src ="js/tooltip.js"></script>
+    <script type = "text/javascript" src ="javascripts/reg_details.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+
+    <script type="text/javascript">
+
+
+        var goodColor = "#66cc66";
+        var badColor = "#ff6666";
+        function CheckPwdStrength(pw)
+        {
+            var strength = document.getElementById("passwordStrength");
+            var pwlength = pw.value.length;
+            var strengthMessage = document.getElementById("strengthMessage");
+            var pwd = pw.value;
+            var normal = new RegExp("(?=.{6,}).*", "g");
+            var medium = new RegExp("^(?=.{7,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g");
+            var strong = new RegExp("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*/W).*$", "g");
+
+            if(strong.test(pwd))
+            {
+                strength.value = 100;
+                strengthMessage.innerHTML = "Strong"
+
+            }
+            else if(medium.test(pwd))
+            {
+                strength.value = 50;
+                strengthMessage.innerHTML = "Medium"
+
+            }
+            else if(normal.test(pwd))
+            {
+                strength.value = 20;
+                strengthMessage.innerHTML = "Weak"
+
+            }
+            else
+            {
+                strength.value = 0;
+
+            }
+
+
+        }
+        function ValidatePassword()
+        {
+            var pw1 = document.getElementById("pwd");
+            var pw2 = document.getElementById("pwd2");
+            // var userid = document.getElementById("uid");
+            var message = document.getElementById("ConfirmMessage");
+
+
+            if(pw1.value == pw2.value)
+            {
+
+
+                pw2.style.backgroundColor = goodColor;
+
+                message.innerHTML = "Passwords match!";
+
+
+            }
+            else
+            {
+
+                pw2.style.backgroundColor = badColor;
+
+                message.innerHTML = "Passwords do not match!";
+            }
+
+        }
+        function validateEmail(){
+
+            var email_address = document.getElementById("email");
+            var	verify_email_address = document.getElementById("email2");
+            var message = document.getElementById('ConfirmMessage1');
+
+            if(email_address.value == verify_email_address.value) {
+                verify_email_address.style.backgroundColor = goodColor;
+                message.innerHTML = "Email matched !"
+            }
+            else{
+                verify_email_address.style.backgroundColor = badColor;
+
+                message.innerHTML = "Email doesnt match!"
+
+            }
+
+            email_address.onChange =  ValidatePassword;
+            verify_email_address.onKeyup = validateEmail;
+        }
+
+        function CheckEmail(mail)
+        {
+            var message = document.getElementById('EmailMessage');
+            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail.value))
+            {
+                message.innerHTML = "E-mail Address accepted!"
+            }
+            else {
+                message.innerHTML = "Enter a valid E-mail Address!"
+                return (false);
+            }
+        }
+        function SavedDetails()
+        {
+
+            sessionStorage.setItem("userid",document.myform.uid.value);
+            sessionStorage.setItem("password", document.myform.pwd.value);
+            sessionStorage.setItem("verify_password", document.myform.pwd2.value);
+            sessionStorage.setItem("email_address", document.myform.email.value);
+            sessionStorage.setItem("verify_email_address", document.myform.email2.value);
+            sessionStorage.setItem("sec_question1", document.myform.Security_Question1.value);
+            sessionStorage.setItem("answer1", document.myform.Securityans.value);
+            sessionStorage.setItem("sec_question2", document.myform.Security_Question2.value);
+            sessionStorage.setItem("answer2", document.myform.Securityans2.value);
+            sessionStorage.setItem("mobile_no", document.myform.mobile.value);
+            sessionStorage.setItem("address", document.myform.address.value);
+            sessionStorage.setItem("areas_of_interest", document.myform.areas.value);
+
+
+
+        }
+
+    </script>
+
+</head>
+<body>
+<div class = "containerdiv">
+    <form id="myForm" name="myform" action="" method="POST">
+        <table  align="left" width = "50%">
+            <tr>
+                <th> <p><font face="verdana" color="green" size = "10">Registration Form</font> </p></th>
+
+            </tr>
+
+            <br>
+            <tr>
+                <td><label>User Id : </label>
+                    <input type="text" name="uid" id = "uid"  style="width: 250px; height: 20px;" >
+                    <br><br>
+                </td></tr>
+            <tr>
+                <td>
+                    <label>Password : </label>
+                    <input type="password" name="pwd" id="pwd" onKeyUp="CheckPwdStrength(this)" required pattern="(?=.*\W)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{7,}" title="Must be more thn 8 characters in length and include 1 uppercase character; 1 lowercase character;1 numeric character(0,9) or 1 special character (@,,,.,_,-). The password is case sensitive and must not contain spaces or be the same as your user id" style="width: 250px; height: 20px;">
+                </td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <td> <progress  id="passwordStrength" value="0" max="100" style=""></progress>
+                    <br>
+                    <span  id = "strengthMessage"></span>
+                    &nbsp;</td>
+
+
+            </tr>
+            <tr>
+                <td>
+                    <br>
+                    <label>Verify Password : </label>
+                    <input type="password" name="pwd2" id="pwd2" onkeyup="ValidatePassword()" style="width: 250px; height: 20px;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span  id = "ConfirmMessage"></span>
+                    <br><br><br>
+
+
+                    <label>Email Address : </label>
+                    <input type="email" name="email" id="email" onkeyup="CheckEmail(this)";  style="width: 250px; height: 20px;">
+                    <span  id = "EmailMessage"></span>
+                    <br><br><br>
+                    <label>Verify Email Address : </label>
+                    <input type="email" name="email2" id="email2" onkeyup="validateEmail();" style="width: 250px; height: 20px;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span  id = "ConfirmMessage1"></span>
+                    <br><br><br>
+                    <label>Security Question : </label>
+                    <select name = "Security_Question1" id="Security_Question1" style="width: 250px; height: 20px;">
+
+                        <option value="Value of 2+3?">Value of 2+3?</option>
+                        <option value="Value of 100+200?">Value of 100+200?</option>
+                        <option value="Value of 23*100?">Value of 23*100?</option>
+                        <option value = "What is the capital of India?">What is the capital of India?</option>
+                        <option value = "What is the capital of USA?">What is the capital of USA?</option>
+                    </select>
+                    <br><br><br>
+                    <label>Security Answer :</label>
+                    <input type="text" name="Securityans" id = "Securityans"  style="width: 250px; height: 20px;">
+                    <br><br><br>
+                    <label>Security Question : </label>
+                    <select name = "Security_Question2" id="Security_Question2" style="width: 250px; height: 20px;">
+
+                        <option value="Value of 2+3?">Value of 2+3?</option>
+                        <option value="Value of 100+200?">Value of 100+200?</option>
+                        <option value="Value of 23*100?">Value of 23*100?</option>
+                        <option value = "What is the capital of India?">What is the capital of India?</option>
+                        <option value = "What is the capital of USA?">What is the capital of USA?</option>
+                    </select>
+                    <br><br><br>
+                    <label>Security Answer :</label>
+                    <input type="text" name="Securityans2" id = "Securityans2"  style="width: 250px; height: 20px;">
+                    <br><br><br>
+                    <label>Mobile : </label>
+                    <input type="tel" name="mobile" id="mobile" style="width: 250px; height: 20px;">
+                    <br><br><br>
+                    <label>Address : </label>
+                    <textarea rows="4" cols="50" name = "address" id="address"></textarea>
+                    <br><br><br><br><br><br><br>
+                    <label>Areas you may be interested in : </label>
+                    <textarea rows="4" cols="50" name="areas" id="areas" ></textarea>
+                    <br><br><br><br>
+
+
+
+
+
+                </td>
+            </tr>
+
+            <tr>
+
+                <td style="text-align: center" >
+                    <br>
+                    <input type="submit" name="submit"  value="Register" id="register" style="width: auto; position: absolute; margin: auto;height: 30px;">
+                    <!--&nbsp;&nbsp; <input type="reset" name="reset" value="Reset"  style="width: 200px; height: 30px;">-->
+
+                </td>
+
+
+
+            </tr>
+
+        </table>
+
+
+
+
+        <table align="right" width="50%">
+            <tr>
+                <td>
+                    <div class="tooltip">
+                        <strong>Password Verification</strong>
+
+                        <div class="row">
+                            <div id="capLetterIcon" class="left icon"></div>
+                            <div class="left rule">1 uppercase letter</div>
+                        </div>
+                        <div class="row">
+                            <div id="lowLetterIcon" class="left icon"></div>
+                            <div class="left rule">1 lowercase letter</div>
+                        </div>
+                        <div class="row">
+                            <div id="numberIcon" class="left icon"></div>
+                            <div class="left rule">1 number</div>
+                        </div>
+                        <div class="row">
+                            <div id="charLengthIcon" class="left icon"></div>
+                            <div class="left rule">8 or more characters</div>
+                        </div>
+                        <div class="row">
+                            <div id="engChar" class="left icon"></div>
+                            <div class="left rule">Use only these english characters : <br>A-z, 0-9, @, -, _ and .</div>
+                        </div>
+                        <div class="row">
+                            <div id="Passuserid" class="left icon"></div>
+                            <div class="left rule">Your password is different <br>from user id.</div>
+                        </div>
+                    </div>
+                </td>
+
+            </tr>
+        </table>
+    </form>
+
+</div>
+
+
+</body>
+</html>

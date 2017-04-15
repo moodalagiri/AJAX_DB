@@ -1,0 +1,71 @@
+.containerdiv label {
+    float:left;
+    width:25%;
+    text-align:right;
+    margin-right:5px; /* optional */
+
+}
+.containerdiv input {
+    float:left;
+    width:65%;
+
+}
+.containerdiv textarea {
+    float:left;
+    width:65%;
+
+}
+.ConfirmMessage{
+    margin: 0;
+    padding: 0;
+    font-size: .8em;
+}
+
+* { font: 10pt verdana; }
+
+body { padding: 10px; }
+
+.tooltip {
+    border-radius: 7px;
+    border: 1px solid black;
+    box-shadow: #aaa 2px 5px 5px 0px;
+    padding: 10px;
+    display: none;
+}
+
+.visible { display: inline-block; }
+
+.tooltip strong {
+    font-size: 10pt;
+    display: block;
+    text-align: center;
+    border-bottom: 1px dotted #1d1d1d;
+    margin-bottom: 2px;
+}
+
+.tooltip .row {
+    padding: 2px;
+}
+
+.tooltip .left { display: inline-block;
+    font-size: 8pt;}
+
+.tooltip .rule {
+    line-height: 16px;
+    vertical-align: top;
+}
+
+.tooltip .icon {
+    height: 16px;
+    width: 16px;
+    background-repeat: no-repeat;
+    background-position: top left;
+}
+
+
+.tooltip .pass {
+    background-image: url("../img/tick.png");
+}
+.tooltip .fail {
+    background-image: url("../img/fail-icon.gif");
+}
